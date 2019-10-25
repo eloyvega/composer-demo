@@ -1,0 +1,51 @@
+version: '3.5'
+
+services:
+  db:
+    image: mongo:4.2.0
+    restart: always
+    volumes:
+      - demo_mongo_data:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - demo_default
+
+  backend:
+    depends_on:
+      - db
+    build:
+      context: ./backend
+    image: demo-backend
+    restart: always
+    links:
+      - db
+    ports:
+      - 5050:5000
+    environment:
+      MONGO_URI: "mongodb://db:27017/"
+    networks:
+      - demo_default
+
+  frontend:
+    depends_on:
+      - backend
+    build:
+      context: ./frontend
+    image: demo-frontend
+    restart: always
+    links:
+      - backend
+    ports:
+      - 3030:3000
+    environment:
+      VUE_APP_TODO_API: "http://localhost:5050/api"
+    networks:
+      - demo_default
+
+volumes:
+  demo_mongo_data:
+
+networks:
+  demo_default:
+    name: demo_default

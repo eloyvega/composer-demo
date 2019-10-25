@@ -1,0 +1,17 @@
+docker pull ubuntu:18.04
+
+docker pull mongo:4.2.0
+
+docker run -it ubuntu:18.04
+
+docker commit ID NOMBRENUEVO
+
+export MONGO_URI=mongodb://localhost:27017/
+
+export FLASK_APP=app.py; flask run
+
+export VUE_APP_TODO_API=http://localhost:5000/api
+
+docker run -p 27017:27017 mongo:4.2.0
+
+docker run -p 27017:27017 -v demo_mongo_data:/data/db mongo:4.2.0
