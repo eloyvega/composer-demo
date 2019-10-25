@@ -37,7 +37,7 @@ services:
     links:
       - backend
     ports:
-      - 3030:3000
+      - 8080:3000
     environment:
       VUE_APP_TODO_API: "http://localhost:5050/api"
     networks:
